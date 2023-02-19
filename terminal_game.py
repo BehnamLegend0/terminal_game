@@ -33,46 +33,43 @@ class Weapon:
     def __repr__(self):
         return "{weapon}: {damage} Damage, {reach} Range, {defence} Defence".format(weapon=self.weapon, damage=str(self.damage), reach=str(self.reach), defence=str(self.defence))
 
-behnam = Player("Behnam", "M", 120)
-bryar = Player("Bryar", "F", 96)
-
 
 player_name = input("Player 1, Choose your character name: ")
-player_gender = (input("""Females are faster by %50 but has %20 less health than men. Choose your gender carefully!
+player_gender = (input("""Females have %40 chance to do critical damage but has %25 less health than males. Choose your gender carefully!
 Enter M for Male or F for Female: """).upper())
-correct_gender = False
-while not correct_gender:
+check = False
+while not check:
     if player_gender == "M":
-        correct_gender = True
+        check = True
     elif player_gender == "F":
-        correct_gender = True
+        check = True
     else: 
         print("Invalid input. Only enter M or F.")
 
 if player_gender == "M":
     player_health = 120
 elif player_gender == "F":
-    player_health = 96
+    player_health = 90
 
 player = Player(player_name, player_gender, player_health)
 
 
 player2_name = input("Player 2, Choose your character name: ")
-player2_gender = (input("""Females are faster by %50 but has %20 less health than men. Choose your gender carefully!
+player2_gender = (input("""Females has %40 chance to do critical damage but has %25 less health than males. Choose your gender carefully!
 Enter M for Male or F for Female: """).upper())
-correct_gender = False
-while not correct_gender:
+check = False
+while not check:
     if player2_gender == "M":
-        correct_gender = True
+        check = True
     elif player2_gender == "F":
-        correct_gender = True
+        check = True
     else: 
         print("Invalid input. Only enter M or F.")
 
 if player2_gender == "M":
     player2_health = 120
 elif player2_gender == "F":
-    player2_health = 96
+    player2_health = 90
 
 player2 = Player(player2_name, player2_gender, player2_health)
 
@@ -81,16 +78,29 @@ spear = Weapon("Spear", 10, 3, 3)
 bow = Weapon("Bow", 11, 4, 0)
 shield = Weapon("Shield", 5, 1, 8)
 
-player_weapon1 = int(input("""
-List of weapons:
-1. {sword}
-2. {spear}
-3. {bow}
-4. {shield}
+check = False
+while not check:
+    player_weapon1 = int(input("""
+    List of weapons:
+    1. {sword}
+    2. {spear}
+    3. {bow}
+    4. {shield}
 
-{player_name}, Enter your main weapon with its number (1, 2 , 3, or 4): 
-""".format(player_name=player_name, sword=sword, spear=spear, bow=bow, shield=shield)))
-player_weapon2 = int(input("Enter your secondary weapon: "))
+    {player_name}, Enter your main weapon with its number (1, 2 , 3, or 4): 
+    """.format(player_name=player_name, sword=sword, spear=spear, bow=bow, shield=shield)))
+    if player_weapon1 in [1, 2, 3, 4]:
+        check = True
+    else:
+        print("Invalid input. Enter 1, 2, 3, or 4!")
+
+check = False
+while not check:
+    player_weapon2 = int(input("Enter your secondary weapon: "))
+    if player_weapon2 in [1, 2, 3, 4]:
+        check = True
+    else:
+        print("Invalid input. Enter 1, 2, 3, or 4!")
 
 
 if player_weapon1 == 1: 
@@ -121,17 +131,29 @@ player_secondary.damage += player_weapon2.damage
 player_secondary.defence += player_weapon2.defence
 player_secondary.reach += player_weapon2.reach
 
+check = False
+while not check:
+    player2_weapon1 = int(input("""
+    List of weapons:
+    1. {sword}
+    2. {spear}
+    3. {bow}
+    4. {shield}
 
-player2_weapon1 = int(input("""
-List of weapons:
-1. {sword}
-2. {spear}
-3. {bow}
-4. {shield}
+    {player2_name}, Enter your main weapon with its number (1, 2 , 3, or 4): 
+    """.format(player2_name=player2_name, sword=sword, spear=spear, bow=bow, shield=shield)))
+    if player2_weapon1 in [1, 2, 3, 4]:
+        check = True
+    else:
+        print("Invalid input. Enter 1, 2, 3, or 4!")
 
-{player2_name}, Enter your main weapon with its number (1, 2 , 3, or 4): 
-""".format(player2_name=player2_name, sword=sword, spear=spear, bow=bow, shield=shield)))
-player2_weapon2 = int(input("Enter your secondary weapon: "))
+check = False
+while not check:
+    player2_weapon2 = int(input("Enter your secondary weapon: "))
+    if player2_weapon2 in [1, 2, 3, 4]:
+        check = True
+    else:
+        print("Invalid input. Enter 1, 2, 3, or 4!")
 
 
 if player2_weapon1 == 1: 
@@ -189,7 +211,7 @@ print("Here is how the game works: Each round you choose a weapon use it against
 
 check = False
 while not check:
-    P1ready = input("{player_name}, are you ready? Enter Y when you are ready: ".format(player_name=player_name))
+    P1ready = input("{player_name}, are you ready? Enter Y when you are ready: ".format(player_name=player_name)).upper()
     if P1ready == "Y":
         check = True
     else:
@@ -197,48 +219,66 @@ while not check:
 
 check = False
 while not check:
-    P1ready = input("{player2_name}, are you ready? Enter Y when you are ready: ".format(player2_name=player2_name))
+    P1ready = input("{player2_name}, are you ready? Enter Y when you are ready: ".format(player2_name=player2_name)).upper()
     if P1ready == "Y":
         check = True
     else:
         print("Invalid input, just enter Y when you are ready.")
 
 arena = [i for i in range(1, 6)]
-for round in range(1, 25):
-    chosen_weapon1 = input("Round {round}! {player_name}, choose your weapon (Enter A for main weapon and B for secondary weapon): ".format(round=str(round), player_name=player_name))
-    chosen_weapon2 = input("Round {round}! {player2_name}, choose your weapon (Enter A for main weapon and B for secondary weapon): ".format(round=str(round), player2_name=player2_name))
+for round in range(1, 100):
+    check = False
+    while not check:
+        chosen_weapon1 = input("Round {round}! {player_name}, choose your weapon (Enter A for main weapon and B for secondary weapon): ".format(round=str(round), player_name=player_name)).upper()
+        if chosen_weapon1 == "A" or "B":
+            check = True
+    check = False
+    while not check:
+        chosen_weapon2 = input("Round {round}! {player2_name}, choose your weapon (Enter A for main weapon and B for secondary weapon): ".format(round=str(round), player2_name=player2_name)).upper()
+        if chosen_weapon2 == "A" or "B":
+            check = True
+        
     distance =  random.choice(arena)
     if chosen_weapon1 == "A":
         player_set = player_main
     elif chosen_weapon1 == "B":
         player_set = player_secondary
-
+    
     if chosen_weapon2 == "A":
         player2_set = player2_main
     elif chosen_weapon2 == "B":
         player2_set = player2_secondary
+    
+    female_crit_chance = random.choices([True, False], weights=[40, 60], k=1)[0]
 
     if player_set.reach >= distance:
-        player2_set.health = player2_set.health - max((player_set.damage - player2_set.defence), 1)
-        print("After {player_name}'s attack, {player2_name} lost {lost_health} health!".format(player_name=player_name, player2_name=player2_name, lost_health=max((player_set.damage - player2_set.defence), 1)))
+        if player_set.gender == "F" and female_crit_chance == True:
+            player2.health = max(player2.health - max((player_set.damage - player2_set.defence) * 2, 2), 0)
+            print("After {player_name}'s CRITICAL attack, {player2_name} lost {lost_health} health!".format(player_name=player_name, player2_name=player2_name, lost_health=max((player_set.damage - player2_set.defence) * 2, 2)))
+        else:
+            player2.health = max(player2.health - max((player_set.damage - player2_set.defence), 1), 0)
+            print("After {player_name}'s attack, {player2_name} lost {lost_health} health!".format(player_name=player_name, player2_name=player2_name, lost_health=max((player_set.damage - player2_set.defence), 1)))
     elif player_set.reach < distance:
         print("{player_name}'s attack couldn't reach to {player2_name}. No damage was dealt!".format(player_name=player_name, player2_name=player2_name))
-    elif (player_set.damage - player2_set.defence) <= 0:
-        print("{player_name} did attack {player2_name} but {player2_name}'s defence was stronger. No damage was dealt!".format(player_name=player_name, player2_name=player2_name))
+
     if player2_set.reach >= distance:
-        player_set.health = player_set.health - max((player2_set.damage - player_set.defence), 1)
-        print("After {player2_name}'s attack, {player_name} lost {lost_health} health!".format(player2_name=player2_name, player_name=player_name, lost_health=max((player2_set.damage - player_set.defence), 1)))
+        if player2_set.gender == "F" and female_crit_chance == True:
+            player.health = max(player.health - max((player2_set.damage - player_set.defence) * 2, 2), 0)
+            print("After {player2_name}'s CRITICAL attack, {player_name} lost {lost_health} health!".format(player2_name=player2_name, player_name=player_name, lost_health=max((player2_set.damage - player_set.defence) * 2, 2)))
+        else:
+            player.health = max(player.health - max((player2_set.damage - player_set.defence), 1), 0)
+            print("After {player2_name}'s attack, {player_name} lost {lost_health} health!".format(player2_name=player2_name, player_name=player_name, lost_health=max((player2_set.damage - player_set.defence), 1)))
     elif player2_set.reach < distance:
         print("{player2_name}'s attack couldn't reach to {player_name}. No damage was dealt!".format(player2_name=player2_name, player_name=player_name))
-    elif (player2_set.damage - player_set.defence) <= 0:
-        print("{player2_name} did attack {player_name} but {player_name}'s defence was too strong. No damage was dealt!".format(player2_name=player2_name, player_name=player_name))
 
-    print("Remaining health:\n{player_name}: {player_health}\n{player2_name}: {player2_health}".format(player_name=player_name, player_health=player.health, player2_name=player2_name, player2_health=player2.health))
-    
-    if player_set.health <= 0:
+    print("Remaining health:\n{player_name}: {player_health}\n{player2_name}: {player2_health}".format(player_name=player_name, player_health=max(player.health, 0), player2_name=player2_name, player2_health=max(player2.health, 0)))
+
+    if player.health == 0 and player2.health == 0:
+        print("{player_name} And {player2_name} died at the same time! The game was a tie!".format(player_name=player_name, player2_name=player2_name))
+        break
+    elif player.health == 0:
         print("{player_name} died! Rest in peace! {player2_name} won the game! CONGRATULATIONS!".format(player_name=player_name, player2_name=player2_name))
         break
-    elif player2_set.health <= 0:
+    elif player2.health == 0:
         print("{player2_name} died! Rest in peace! {player_name} won the game! CONGRATULATIONS!".format(player_name=player_name, player2_name=player2_name))
         break
-
